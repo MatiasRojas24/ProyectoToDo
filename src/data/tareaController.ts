@@ -2,7 +2,7 @@ import axios from "axios";
 import { ITarea } from "../types/ITarea";
 import { putBacklog } from "../http/backlog";
 
-const API_URL_BACKLOG = process.env.REACT_APP_API_URL_BACKLOG!
+const API_URL_BACKLOG = import.meta.env.VITE_API_URL_BACKLOG!
 export const getTareasController = async (): Promise<ITarea[] | undefined> => {
     try {
         const response = await axios.get<{ tareas: ITarea[] }>(API_URL_BACKLOG)

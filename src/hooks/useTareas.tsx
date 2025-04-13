@@ -22,7 +22,7 @@ export const useTareas = () => {
         agregarNuevaTarea(nuevaTarea)
         try {
             await createTareaController(nuevaTarea)
-            Swal.fire("Éxtio", "Tarea creada correctamente", "success")
+            Swal.fire("Éxito", "Tarea creada correctamente", "success")
         } catch (error) {
             eliminarUnaTarea(nuevaTarea.id!)
             console.error("Algo salió mal al crear la tarea: ", error)

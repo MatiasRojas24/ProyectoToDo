@@ -1,53 +1,60 @@
-import { FC } from "react";
+import { useEffect, useState } from "react";
+import { useSprints } from "../../../hooks/useSprints";
+import { sprintStore } from "../../../store/sprintStore";
 import styles from "./Sidebar.module.css";
+import { useNavigate } from "react-router-dom";
+import { ISprint } from "../../../types/ISprint";
+import { SprintListCard } from "../../UI/SprintListCard/SprintListCard";
+import { ModalCrearSprint } from "../../UI/ModalCrearSprint/ModalCrearSprint";
 
-type ISidebar = {
-  setOpenSprint: (state: boolean) => void;
-  setOpenBacklog: (state: boolean) => void;
-}
-export const Sidebar: FC<ISidebar> = ({ setOpenSprint, setOpenBacklog }) => {
-  const handleOpenBacklog = () => {
-    setOpenSprint(false)
-    setOpenBacklog(true)
+export const Sidebar = () => {
+  const setSprintActiva = sprintStore((state) => state.setSprintActiva)
+  const { getSprints, sprints, eliminarSprint } = useSprints()
+  useEffect(() => {
+    getSprints()
+  }, [])
+  console.log(sprints)
+  const navigate = useNavigate()
+  const handleNavigateBacklog = () => {
+    navigate("/backlog")
   }
-  const handleOpenSprint = () => {
-    setOpenBacklog(false)
-    setOpenSprint(true)
+  const handleNavigateSprint = (sprint: ISprint) => {
+    setSprintActiva(sprint)
+    navigate(`/sprints?sprint=${sprint.id}`)
+  }
+  const [openModal, setOpenModal] = useState(false)
+  const handleCloseModal = () => {
+    setOpenModal(false)
+  }
+  const handleOpenModalEdit = (sprint: ISprint) => {
+    setSprintActiva(sprint)
+    setOpenModal(true)
+  }
+  const handleDelete = (idSprint: string) => {
+    eliminarSprint(idSprint)
   }
   return (
-    <aside className={styles.sidebar}>
-      <button onClick={handleOpenBacklog} className={styles.backlogButton}>
-        Backlog
-        <span className={`material-symbols-outlined ${styles.backlogIcon}`}>
-          import_contacts
-        </span>
-      </button>
-      <div className={styles.containerListSprints}>
-        <h3>
-          Lista de Sprints
-          <button className={styles.buttonAddSprint}>
-            <span className="material-symbols-outlined">playlist_add</span>
-          </button>
-        </h3>
+    <>
+      <aside className={styles.sidebar}>
+        <button onClick={handleNavigateBacklog} className={styles.backlogButton}>
+          Backlog
+          <span className={`material-symbols-outlined ${styles.backlogIcon}`}>
+            import_contacts
+          </span>
+        </button>
+        <div className={styles.containerListSprints}>
+          <h3>
+            Lista de Sprints
+            <button className={styles.buttonAddSprint} onClick={() => setOpenModal(true)}>
+              <span className="material-symbols-outlined">playlist_add</span>
+            </button>
+          </h3>
 
-        <hr />
-        <div onClick={(e) => { e.stopPropagation(); handleOpenSprint() }} className={styles.containerSprints}>
-          <h4>Sprint Prueba</h4>
-          <p>Inicio: 2025-03-04</p>
-          <p>Cierre: 2025-03-11</p>
-          <div className={styles.buttons}>
-            <button onClick={(e) => { e.stopPropagation(); console.log("hola") }} className={styles.visibilityButton}>
-              <span className="material-symbols-outlined">visibility</span>
-            </button>
-            <button className={styles.editButton}>
-              <span className="material-symbols-outlined">edit</span>
-            </button>
-            <button className={styles.deleteButton}>
-              <span className="material-symbols-outlined">delete</span>
-            </button>
-          </div>
-        </div>
-      </div >
-    </aside >
+          <hr />
+          {sprints.length > 0 ? sprints.map((sprint) => (<SprintListCard sprint={sprint} handleNavigateSprint={handleNavigateSprint} handleOpenModalEdit={handleOpenModalEdit} handleDelete={handleDelete} />)) : <h3>No hay Sprints</h3>}
+        </div >
+      </aside >
+      {openModal && <ModalCrearSprint handleCloseModal={handleCloseModal} />}
+    </>
   );
 };

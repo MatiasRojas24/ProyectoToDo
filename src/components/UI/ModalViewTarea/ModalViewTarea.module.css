@@ -31,7 +31,12 @@
     justify-content: space-around;
     color: #fff;
 }
-
+.contentPopUP h2,
+.contentPopUP h3 {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
 .buttonCerrarModal {
     width: 40%;
     padding: 10px;

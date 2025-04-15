@@ -34,7 +34,7 @@
 .editButton,
 .sendButton {
     background-color: #00adb5;
-    transition: .3s ease-in-out;
+    transition: ease-in-out .3s;
 }
 .visibilityButton:hover,
 .editButton:hover,
@@ -42,7 +42,11 @@
     transform: translateY(-3px);
     cursor: pointer;
     }
-
+.sendButton:hover {
+    background-color: #00d7e2;
+  scale: 1.1;
+  cursor: pointer;
+}
 .deleteButton {
     background-color: red;
 }

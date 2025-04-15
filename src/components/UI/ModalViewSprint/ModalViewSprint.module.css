@@ -55,3 +55,13 @@
     scale: 1.01;
     transform: translateY(-3px);
 }
+.textoTarjeta{
+    display: block;
+    white-space: nowrap;       /* Todo en una línea */
+    overflow-x: auto;          /* Scroll horizontal */
+    overflow-y: hidden;        /* Sin scroll vertical */
+    max-width: 100%;           /* Ocupa todo el ancho disponible */
+}
+.textoTarjeta::-webkit-scrollbar {
+    display: none;
+}

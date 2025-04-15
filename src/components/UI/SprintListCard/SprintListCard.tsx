@@ -15,7 +15,7 @@ export const SprintListCard: FC<ISprintListCard> = ({ sprint, handleNavigateSpri
     return (
         <>
             <div key={sprint.id} onClick={(e) => { e.stopPropagation(); handleNavigateSprint(sprint) }} className={styles.containerSprints}>
-                <h4>{sprint.nombre}</h4>
+                <h4 className={styles.textoTarjeta}>{sprint.nombre}</h4>
                 <p>Inicio: {sprint.fechaInicio}</p>
                 <p>Cierre: {sprint.fechaCierre}</p>
                 <div className={styles.buttons}>

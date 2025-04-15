@@ -1,8 +1,21 @@
 import { useState } from "react";
 import styles from "./Dropdown.module.css";
+import { ISprint } from "../../../types/ISprint";
 
-const Dropdown = () => {
+interface DropdownProps {
+  sprints: ISprint[];
+  onSelectSprint: (id: string) => void;
+}
+
+const Dropdown = ({ sprints, onSelectSprint }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedSprint, setSelectedSprint] = useState<ISprint | null>(null);
+
+  const handleSelect = (sprint: ISprint) => {
+    onSelectSprint(sprint.id!);
+    setSelectedSprint(sprint);
+    setIsOpen(false);
+  };
 
   return (
     <div className={styles.dropdown}>
@@ -10,13 +23,19 @@ const Dropdown = () => {
         className={styles.dropdownToggle}
         onClick={() => setIsOpen(!isOpen)}
       >
-        Seleccione una Sprint ▼
+        {selectedSprint ? selectedSprint.nombre : "Seleccione una Sprint"} ▼
       </button>
       {isOpen && (
         <div className={styles.dropdownMenu}>
-          <button className={styles.dropdownItem}>Opción 1</button>
-          <button className={styles.dropdownItem}>Opción 2</button>
-          <button className={styles.dropdownItem}>Opción 3</button>
+          {sprints.map((sprint) => (
+            <button
+              key={sprint.id}
+              className={styles.dropdownItem}
+              onClick={() => handleSelect(sprint)}
+            >
+              {sprint.nombre}
+            </button>
+          ))}
         </div>
       )}
     </div>

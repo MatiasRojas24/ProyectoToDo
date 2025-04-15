@@ -9,7 +9,7 @@
     height: 100vh;
     backdrop-filter: brightness(90%) blur(2px);
     animation: fadeIn 0.3s ease-in-out;
-    z-index: 1000;
+    z-index: 9999;
   }
   @keyframes fadeIn {
       0% {

@@ -56,9 +56,9 @@ export const ModalCrearSprint: FC<IModalCrearSprint> = ({ handleCloseModal }) =>
                         Nombre
                         <input value={formValues.nombre} onChange={handleChange} type="text" required autoComplete="off" name="nombre" />
                         Fecha de inicio
-                        <input value={formValues.fechaInicio} onChange={handleChange} type="date" required name="fechaInicio" />
+                        <input value={formValues.fechaInicio} onChange={handleChange} type="date" required min={new Date().toISOString().split("T")[0]} name="fechaInicio" />
                         Fecha de cierre
-                        <input value={formValues.fechaCierre} onChange={handleChange} type="date" required autoComplete="off" name="fechaCierre" />
+                        <input value={formValues.fechaCierre} onChange={handleChange} type="date" required min={formValues.fechaInicio} name="fechaCierre" />
                     </div>
                     <div className={styles.buttonCard}>
                         <button className={styles.buttonCrearTarea}>{sprintActiva ? "Editar Sprint" : "Crear Sprint"}</button>

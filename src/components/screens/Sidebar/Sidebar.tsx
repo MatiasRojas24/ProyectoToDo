@@ -13,7 +13,6 @@ export const Sidebar = () => {
   useEffect(() => {
     getSprints()
   }, [])
-  console.log(sprints)
   const navigate = useNavigate()
   const handleNavigateBacklog = () => {
     navigate("/backlog")
@@ -21,6 +20,7 @@ export const Sidebar = () => {
   const handleNavigateSprint = (sprint: ISprint) => {
     setSprintActiva(sprint)
     navigate(`/sprints?sprint=${sprint.id}`)
+    setSprintActiva(null)
   }
   const [openModal, setOpenModal] = useState(false)
   const handleCloseModal = () => {

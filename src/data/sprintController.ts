@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ISprint } from "../types/ISprint";
 import { putSprintList } from "../http/sprintList";
+import { ITarea } from "../types/ITarea";
 
 
 const API_URL_SPRINTLIST = import.meta.env.VITE_API_URL_SPRINTLIST!

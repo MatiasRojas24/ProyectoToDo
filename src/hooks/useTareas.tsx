@@ -61,5 +61,28 @@ export const useTareas = () => {
             console.error("Algo salió mal al eliminar la tarea: ", error)
         }
     }
-    return { getTareas, crearTarea, putTareaEditar, eliminarTarea, tareas }
+
+    const enviarTareaASprint = async (idTarea: string) => {
+        const estadoPrevio = tareas.find((el) => el.id === idTarea)
+        try {
+            await deleteTareaController(idTarea)
+            eliminarUnaTarea(idTarea)
+            Swal.fire("Enviado", "La tarea se envió al sprint correctamente", "success")
+        } catch (error) {
+            if (estadoPrevio) agregarNuevaTarea(estadoPrevio)
+            console.error("Algo salió mal al enviar la tarea al sprint: ", error)
+        }
+    }
+
+    const recibirTareaDeSprint = async (nuevaTarea: ITarea) => {
+        agregarNuevaTarea(nuevaTarea)
+        try {
+            await createTareaController(nuevaTarea)
+        } catch (error) {
+            eliminarUnaTarea(nuevaTarea.id!)
+            console.error("Algo salió mal al recibir la tarea en el backlog: ", error)
+        }
+    }
+
+    return { getTareas, crearTarea, putTareaEditar, eliminarTarea, enviarTareaASprint, recibirTareaDeSprint, tareas }
 }

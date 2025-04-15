@@ -63,5 +63,84 @@ export const useSprints = () => {
         }
     }
 
-    return { getSprints, crearSprint, putSprintEditar, eliminarSprint, sprints }
+    const modificarEstadoTareasSprint = async (sprintEditada: ISprint) => {
+        const estadoPrevio = sprints.find((el) => el.id === sprintEditada.id)
+        editarUnaSprint(sprintEditada)
+        try {
+            await updateSprintController(sprintEditada)
+        } catch (error) {
+            if (estadoPrevio) editarUnaSprint(estadoPrevio)
+            console.error("Algo salió mal al modificar el estado de las tareas de la sprint", error)
+        }
+    }
+
+    const editarTareasSprint = async (sprintEditada: ISprint) => {
+        const estadoPrevio = sprints.find((el) => el.id === sprintEditada.id)
+        try {
+            await updateSprintController(sprintEditada)
+            editarUnaSprint(sprintEditada)
+            Swal.fire("Éxito", "Tarea actualizada correctamente", "success")
+        } catch (error) {
+            if (estadoPrevio) editarUnaSprint(estadoPrevio)
+            console.error("Algo salió mal al editar la tarea de la sprint", error)
+        }
+    }
+
+    const crearTareaSprint = async (sprintEditada: ISprint) => {
+        const estadoPrevio = sprints.find((el) => el.id === sprintEditada.id)
+        try {
+            await updateSprintController(sprintEditada)
+            editarUnaSprint(sprintEditada)
+            Swal.fire("Éxito", "Tarea creada correctamente", "success")
+        } catch (error) {
+            if (estadoPrevio) editarUnaSprint(estadoPrevio)
+            console.error("Algo salió mal al crear la tarea de la sprint", error)
+        }
+    }
+
+    const eliminarTareaSprint = async (sprintEditada: ISprint) => {
+        const estadoPrevio = sprints.find((el) => el.id === sprintEditada.id)
+        const confirm = await Swal.fire({
+            title: "¿Estás seguro?",
+            text: "Esta acción no se puede deshacer",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar",
+        })
+        if (!confirm.isConfirmed) return
+        try {
+            await updateSprintController(sprintEditada)
+            editarUnaSprint(sprintEditada)
+            Swal.fire("Eliminado", "La tarea se eliminó correctamente", "success")
+        } catch (error) {
+            if (estadoPrevio) editarUnaSprint(estadoPrevio)
+            console.error("Algo salió mal al eliminar la tarea de la sprint", error)
+        }
+    }
+
+    const enviarTareaABacklog = async (sprintEditada: ISprint) => {
+        const estadoPrevio = sprints.find((el) => el.id === sprintEditada.id)
+        try {
+            await updateSprintController(sprintEditada)
+            editarUnaSprint(sprintEditada)
+            Swal.fire("Enviado", "La tarea se envió al backlog correctamente", "success")
+        } catch (error) {
+            if (estadoPrevio) editarUnaSprint(estadoPrevio)
+            console.error("Algo salió mal al enviar la tarea de la sprint al backlog", error)
+        }
+    }
+
+    const recibirTareaDeBacklog = async (sprintEditada: ISprint) => {
+        const estadoPrevio = sprints.find((el) => el.id === sprintEditada.id)
+        try {
+            await updateSprintController(sprintEditada)
+            editarUnaSprint(sprintEditada)
+        } catch (error) {
+            if (estadoPrevio) editarUnaSprint(estadoPrevio)
+            console.error("Algo salió mal al recibir la tarea del backlog", error)
+        }
+    }
+
+    return { getSprints, crearSprint, putSprintEditar, eliminarSprint, modificarEstadoTareasSprint, editarTareasSprint, crearTareaSprint, eliminarTareaSprint, enviarTareaABacklog, recibirTareaDeBacklog, sprints }
 }

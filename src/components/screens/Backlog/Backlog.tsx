@@ -59,7 +59,7 @@ export const Backlog = () => {
             tareas.map((el) => (
               <TareaBacklogCard key={el.id} tarea={el} handleOpenModalEdit={handleOpenModalEdit} handleDeleteTarea={handleDeleteTarea} handleEnviarTareaASprint={handleEnviarTareaASprint} />
             )) : <div>
-              <h3>No hay Tareas</h3>
+              <h3 style={{ marginLeft: "20px", marginTop: "10px" }}>No hay Tareas</h3>
             </div>
         }
       </div>

@@ -141,7 +141,7 @@ export const ModalCrearSprint: FC<IModalCrearSprint> = ({
               value={formValues.fechaInicio}
               onChange={handleChange}
               type="date"
-              min={new Date().toISOString().split("T")[0]}
+              min={sprintActiva ? new Date(sprintActiva.fechaInicio).toISOString().split("T")[0] : new Date().toISOString().split("T")[0]}
               name="fechaInicio"
             />
             {errors.fechaInicio && (

@@ -22,10 +22,10 @@ export const SprintListCard: FC<ISprintListCard> = ({ sprint, handleNavigateSpri
                     <button onClick={(e) => { e.stopPropagation(); setOpenViewModal(true) }} className={styles.visibilityButton}>
                         <span className="material-symbols-outlined">visibility</span>
                     </button>
-                    <button className={styles.editButton} onClick={() => handleOpenModalEdit(sprint)}>
+                    <button className={styles.editButton} onClick={(e) => { e.stopPropagation(); handleOpenModalEdit(sprint) }}>
                         <span className="material-symbols-outlined">edit</span>
                     </button>
-                    <button className={styles.deleteButton} onClick={() => handleDelete(sprint.id!)}>
+                    <button className={styles.deleteButton} onClick={(e) => { e.stopPropagation(); handleDelete(sprint.id!) }}>
                         <span className="material-symbols-outlined">delete</span>
                     </button>
                 </div>
